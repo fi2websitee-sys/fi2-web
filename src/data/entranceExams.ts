@@ -1,0 +1,68 @@
+import { EntranceExam } from '@/types';
+
+export const entranceExams: EntranceExam[] = [
+  {
+    id: '1',
+    academicYear: '2024-2025',
+    major: 'All Majors',
+    majorAr: 'جميع التخصصات',
+    date: 'July 2024',
+    pdfUrl: '/documents/entrance-exams/entrance-exam-2024-2025.pdf',
+  },
+  {
+    id: '2',
+    academicYear: '2023-2024',
+    major: 'All Majors',
+    majorAr: 'جميع التخصصات',
+    date: 'July 2023',
+    pdfUrl: '/documents/entrance-exams/entrance-exam-2023-2024.pdf',
+  },
+  {
+    id: '3',
+    academicYear: '2022-2023',
+    major: 'All Majors',
+    majorAr: 'جميع التخصصات',
+    date: 'July 2022',
+    pdfUrl: '/documents/entrance-exams/entrance-exam-2022-2023.pdf',
+  },
+  {
+    id: '4',
+    academicYear: '2021-2022',
+    major: 'All Majors',
+    majorAr: 'جميع التخصصات',
+    date: 'July 2021',
+    pdfUrl: '/documents/entrance-exams/entrance-exam-2021-2022.pdf',
+  },
+  {
+    id: '5',
+    academicYear: '2020-2021',
+    major: 'All Majors',
+    majorAr: 'جميع التخصصات',
+    date: 'July 2020',
+    pdfUrl: '/documents/entrance-exams/entrance-exam-2020-2021.pdf',
+  },
+  {
+    id: '6',
+    academicYear: '2019-2020',
+    major: 'All Majors',
+    majorAr: 'جميع التخصصات',
+    date: 'July 2019',
+    pdfUrl: '/documents/entrance-exams/entrance-exam-2019-2020.pdf',
+  },
+  {
+    id: '7',
+    academicYear: '2018-2019',
+    major: 'All Majors',
+    majorAr: 'جميع التخصصات',
+    date: 'July 2018',
+    pdfUrl: '/documents/entrance-exams/entrance-exam-2018-2019.pdf',
+  },
+  {
+    id: '8',
+    academicYear: '2017-2018',
+    major: 'All Majors',
+    majorAr: 'جميع التخصصات',
+    date: 'July 2017',
+    pdfUrl: '/documents/entrance-exams/entrance-exam-2017-2018.pdf',
+  },
+];
