@@ -45,7 +45,7 @@ export default function RulesPage() {
               <div>
                 <h4 className="font-semibold text-gray-800 mb-2">Article 4</h4>
                 <p className="text-gray-700 leading-relaxed">
-                  Master program admission requires a bachelor's degree with a minimum
+                  Master program admission requires a bachelor&apos;s degree with a minimum
                   GPA as specified by each program.
                 </p>
               </div>

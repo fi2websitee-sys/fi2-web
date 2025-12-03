@@ -53,7 +53,7 @@ export default function EntranceExamsPage() {
                   <li className="flex items-start">
                     <CheckCircle className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700">
-                      Bachelor's degree in relevant field
+                      Bachelor&apos;s degree in relevant field
                     </span>
                   </li>
                   <li className="flex items-start">
