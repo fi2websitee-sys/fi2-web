@@ -66,7 +66,7 @@ export default function ContactPage() {
                     Phone
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    +961 1 870 627 ext: 114
+                    +961 76 782 943
                   </p>
                 </div>
               </div>
@@ -80,10 +80,10 @@ export default function ContactPage() {
                     Email
                   </h3>
                   <a
-                    href="mailto:committee@fi2.ul.edu.lb"
+                    href="mailto:media.lufi2@gmail.com"
                     className="text-primary hover:text-primary-dark text-sm transition-smooth"
                   >
-                    committee@fi2.ul.edu.lb
+                    media.lufi2@gmail.com
                   </a>
                 </div>
               </div>

@@ -38,7 +38,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center text-white/80 text-sm">
                 <Phone className="w-4 h-4 mr-2 flex-shrink-0 text-primary-light" />
-                <span>+961 1 870 627 ext: 114</span>
+                <span>+961 76 782 943</span>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@ export default function Footer() {
             </h3>
             <div className="flex gap-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/1BgRXDqPAJ/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary-light rounded-lg transition-smooth hover-lift"
@@ -59,7 +59,7 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/fi2_students_committee?igsh=MXdyMGo4MTBnOXljbQ=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary-light rounded-lg transition-smooth hover-lift"

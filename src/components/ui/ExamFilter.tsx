@@ -81,8 +81,8 @@ export default function ExamFilter({
             className={selectClass}
           >
             <option value="all">All Semesters</option>
-            <option value="fall">Fall</option>
-            <option value="spring">Spring</option>
+            <option value="semester1">Semester 1</option>
+            <option value="semester2">Semester 2</option>
           </select>
         </div>
 

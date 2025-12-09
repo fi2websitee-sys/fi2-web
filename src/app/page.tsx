@@ -13,7 +13,7 @@ export default function Home() {
       {/* Hero Section */}
       <HeroBanner
         title="FI2 STUDENT COMMITTEE"
-        titleAr="لجنة طلاب كلية الإعلام الثانية"
+        titleAr="hay2a"
         subtitle="Welcome to the Faculty of Information II at Lebanese University"
       />
 
