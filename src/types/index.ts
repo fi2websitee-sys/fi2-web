@@ -43,7 +43,7 @@ export interface PreviousExam {
   courseNameAr?: string;
   major: 'journalism' | 'pr' | 'marketing' | 'info-management' | 'data-science' | 'common';
   yearLevel: 1 | 2 | 3 | 'master1' | 'master2';
-  semester: 'fall' | 'spring';
+  semester: 'semester1' | 'semester2';
   academicYear: string;
   examType: 'midterm' | 'final' | 'quiz';
   pdfUrl: string;
@@ -88,7 +88,7 @@ export interface NewsItem {
 export interface ExamFilters {
   major: 'all' | 'journalism' | 'pr' | 'marketing' | 'info-management' | 'data-science' | 'common';
   yearLevel: 'all' | 1 | 2 | 3 | 'master1' | 'master2';
-  semester: 'all' | 'fall' | 'spring';
+  semester: 'all' | 'semester1' | 'semester2';
   academicYear: 'all' | string;
   examType: 'all' | 'midterm' | 'final' | 'quiz';
 }
