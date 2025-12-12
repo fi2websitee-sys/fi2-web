@@ -75,7 +75,7 @@ export const navigation: NavItem[] = [
   },
   {
     label: 'Previous Exams',
-    labelAr: 'امتحانات سابقة',
+    labelAr: 'الامتحانات سابقة',
     href: '/previous-exams',
   },
   {

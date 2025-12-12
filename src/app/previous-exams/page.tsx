@@ -75,8 +75,8 @@ export default function PreviousExamsPage() {
     <>
       <HeroBanner
         title="PREVIOUS EXAMS"
-        titleAr="امتحانات سابقة"
-        subtitle="Browse and download past exams to help you prepare"
+        titleAr="الامتحانات سابقة"
+        subtitle="Browse and download previous exams"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

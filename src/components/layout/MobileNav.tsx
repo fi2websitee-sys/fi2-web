@@ -35,6 +35,13 @@ export default function MobileNav() {
       {/* Mobile Header */}
       <header className="lg:hidden fixed top-3px left-0 right-0 z-40 bg-white border-b border-gray-200">
         <div className="flex items-center justify-between px-4 py-3">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 text-gray-800 hover:bg-primary/5 rounded-lg transition-smooth"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/images/fi2-logo.svg"
@@ -48,13 +55,6 @@ export default function MobileNav() {
               <span className="text-[10px] text-gray-600">Student Committee</span>
             </div>
           </Link>
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 text-gray-800 hover:bg-primary/5 rounded-lg transition-smooth"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
       </header>
 
