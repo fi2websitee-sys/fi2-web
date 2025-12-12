@@ -50,7 +50,7 @@ export default function Footer() {
             </h3>
             <div className="flex gap-4">
               <a
-                href="https://www.facebook.com/share/1BgRXDqPAJ/"
+                href="https://www.facebook.com/fi2studentscommittee"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary-light rounded-lg transition-smooth hover-lift"
@@ -59,7 +59,7 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://www.instagram.com/fi2_students_committee?igsh=MXdyMGo4MTBnOXljbQ=="
+                href="https://www.instagram.com/fi2_students_committee/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary-light rounded-lg transition-smooth hover-lift"
