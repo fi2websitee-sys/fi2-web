@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Plus, FileText } from 'lucide-react';
 import ExamsList from '@/components/admin/ExamsList';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 0;
 
@@ -22,7 +23,10 @@ export default async function AdminExamsPage() {
     .order('created_at', { ascending: false });
 
   if (error) {
-    console.error('Error fetching exams:', error);
+    logger.error('Error fetching exams', {
+      error: error.message,
+      code: error.code,
+    });
   }
 
   return (

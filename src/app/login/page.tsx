@@ -34,8 +34,9 @@ export default function LoginPage() {
         router.refresh();
       }
     } catch (err) {
-      console.error('Login error:', err);
-      setError(err instanceof Error ? err.message : 'Invalid email or password');
+      // Don't log errors client-side to prevent information disclosure
+      // Generic error message for security
+      setError('Invalid email or password. Please try again.');
     } finally {
       setLoading(false);
     }

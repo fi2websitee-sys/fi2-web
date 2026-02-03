@@ -1,7 +1,6 @@
 'use client';
 
 import { ExamFilters } from '@/types';
-import { cn } from '@/lib/utils';
 
 interface ExamFilterProps {
   filters: ExamFilters;

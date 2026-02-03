@@ -8,6 +8,7 @@ import {
   MessageSquare,
   TrendingUp
 } from 'lucide-react';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 0; // Disable caching for admin pages
 
@@ -32,7 +33,9 @@ async function getStats() {
       contacts: contactsCount.count || 0,
     };
   } catch (error) {
-    console.error('Error fetching stats:', error);
+    logger.error('Error fetching admin stats', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
     return {
       news: 0,
       previousExams: 0,

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Trash2, FileText, Download, Loader2 } from 'lucide-react';
+import { logger } from '@/lib/utils/logger';
 
 interface Exam {
   id: string;
@@ -46,7 +47,10 @@ export default function ExamsList({ exams: initialExams }: ExamsListProps) {
             .remove([`exams/${fileName}`]);
 
           if (storageError) {
-            console.error('Error deleting file from storage:', storageError);
+            logger.error('Error deleting file from storage', {
+              error: storageError.message,
+              // Don't log file paths or user info
+            });
           }
         }
       }
@@ -66,7 +70,10 @@ export default function ExamsList({ exams: initialExams }: ExamsListProps) {
 
       router.refresh();
     } catch (error) {
-      console.error('Error deleting exam:', error);
+      logger.error('Error deleting exam', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        examId: exam.id.substring(0, 8) + '...', // Partial ID only
+      });
       alert('Failed to delete exam. Please try again.');
     } finally {
       setDeletingId(null);

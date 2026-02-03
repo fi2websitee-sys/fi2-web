@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { ArrowLeft, Upload, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
+import { examUploadSchema, fileUploadSchema } from '@/lib/validation/schemas';
+import { logger } from '@/lib/utils/logger';
 
 export default function NewExamPage() {
   const router = useRouter();
@@ -35,16 +37,31 @@ export default function NewExamPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      if (selectedFile.type !== 'application/pdf') {
-        setError('Please upload a PDF file');
+      // Validate file using schema
+      const fileValidation = fileUploadSchema.safeParse({ file: selectedFile });
+      
+      if (!fileValidation.success) {
+        const errorMessage = fileValidation.error.errors[0]?.message || 'Invalid file';
+        setError(errorMessage);
         setFile(null);
         return;
       }
-      if (selectedFile.size > 10 * 1024 * 1024) { // 10MB limit
-        setError('File size must be less than 10MB');
+
+      // Additional security: Check file extension matches MIME type
+      const fileName = selectedFile.name.toLowerCase();
+      if (!fileName.endsWith('.pdf')) {
+        setError('File must have .pdf extension');
         setFile(null);
         return;
       }
+
+      // Check for suspicious file names
+      if (fileName.includes('..') || fileName.includes('/') || fileName.includes('\\')) {
+        setError('Invalid file name');
+        setFile(null);
+        return;
+      }
+
       setFile(selectedFile);
       setError('');
     }
@@ -62,13 +79,38 @@ export default function NewExamPage() {
     setError('');
 
     try {
-      // Create unique filename
+      // Validate form data
+      const formValidation = examUploadSchema.safeParse({
+        courseName: formData.courseName,
+        courseNameAr: formData.courseNameAr || null,
+        major: formData.major,
+        yearLevel: formData.yearLevel,
+        semester: formData.semester,
+        academicYear: formData.academicYear,
+        examType: formData.examType,
+      });
+
+      if (!formValidation.success) {
+        const errorMessage = formValidation.error.errors[0]?.message || 'Invalid form data';
+        setError(errorMessage);
+        setUploading(false);
+        return;
+      }
+
+      // Use validated (and transformed) data
+      const validatedData = formValidation.data;
+
+      // Create unique filename with sanitization
       const timestamp = Date.now();
-      const sanitizedCourseName = formData.courseName
+      const sanitizedCourseName = validatedData.courseName
         .toLowerCase()
         .replace(/[^a-z0-9]/g, '-')
-        .replace(/-+/g, '-');
-      const fileName = `${formData.academicYear}-${sanitizedCourseName}-${formData.examType}-${timestamp}.pdf`;
+        .replace(/-+/g, '-')
+        .substring(0, 50); // Limit length
+      const sanitizedAcademicYear = validatedData.academicYear.replace(/[^0-9-]/g, '');
+      const sanitizedExamType = validatedData.examType.replace(/[^a-z]/g, '');
+      
+      const fileName = `${sanitizedAcademicYear}-${sanitizedCourseName}-${sanitizedExamType}-${timestamp}.pdf`;
       const filePath = `exams/${fileName}`;
 
       // Upload file to Supabase Storage
@@ -88,17 +130,17 @@ export default function NewExamPage() {
         .from('documents')
         .getPublicUrl(filePath);
 
-      // Save to database
+      // Save to database using validated data
       const { error: dbError } = await supabase
         .from('previous_exams')
         .insert({
-          course_name: formData.courseName,
-          course_name_ar: formData.courseNameAr || null,
-          major: formData.major,
-          year_level: formData.yearLevel,
-          semester: formData.semester,
-          academic_year: formData.academicYear,
-          exam_type: formData.examType,
+          course_name: validatedData.courseName,
+          course_name_ar: validatedData.courseNameAr || null,
+          major: validatedData.major,
+          year_level: validatedData.yearLevel,
+          semester: validatedData.semester,
+          academic_year: validatedData.academicYear,
+          exam_type: validatedData.examType,
           pdf_url: publicUrl,
           file_size: file.size,
         });
@@ -118,8 +160,11 @@ export default function NewExamPage() {
       }, 2000);
 
     } catch (err) {
-      console.error('Upload error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to upload exam');
+      logger.error('Exam upload error', {
+        error: err instanceof Error ? err.message : 'Unknown error',
+        // Don't log file details or user info
+      });
+      setError('Failed to upload exam. Please try again.');
     } finally {
       setUploading(false);
     }

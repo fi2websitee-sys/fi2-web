@@ -3,6 +3,7 @@ import { Syne, DM_Sans, IBM_Plex_Sans_Arabic } from 'next/font/google';
 import Sidebar from '@/components/layout/Sidebar';
 import MobileNav from '@/components/layout/MobileNav';
 import Footer from '@/components/layout/Footer';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import './globals.css';
 
 const syne = Syne({
@@ -78,9 +79,11 @@ export default function RootLayout({
           {/* Add padding top for mobile header */}
           <div className="lg:hidden h-16" />
 
-          <main id="main-content" className="flex-grow">
-            {children}
-          </main>
+          <ErrorBoundary>
+            <main id="main-content" className="flex-grow">
+              {children}
+            </main>
+          </ErrorBoundary>
 
           <Footer />
         </div>

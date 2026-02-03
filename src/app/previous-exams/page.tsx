@@ -1,75 +1,66 @@
-'use client';
-
-import { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
 import HeroBanner from '@/components/ui/HeroBanner';
-import ExamFilter from '@/components/ui/ExamFilter';
-import ExamTable from '@/components/ui/ExamTable';
-import { previousExams } from '@/data/previousExams';
-import { ExamFilters } from '@/types';
+import PreviousExamsClient from '@/components/ui/PreviousExamsClient';
+import { previousExams as staticPreviousExams } from '@/data/previousExams';
+import { PreviousExam } from '@/types';
+import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/utils/logger';
 
-export default function PreviousExamsPage() {
-  const [filters, setFilters] = useState<ExamFilters>({
-    major: 'all',
-    yearLevel: 'all',
-    semester: 'all',
-    academicYear: 'all',
-    examType: 'all',
+export const revalidate = 0;
+
+async function getPreviousExams(): Promise<PreviousExam[]> {
+  // If Supabase is not configured, fall back to static data
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return staticPreviousExams;
+  }
+
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('previous_exams')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error || !data) {
+    if (error) {
+      logger.error('Error fetching previous exams from Supabase', {
+        error: error.message,
+        code: error.code,
+      });
+    }
+    return staticPreviousExams;
+  }
+
+  // Map Supabase rows into the strongly-typed PreviousExam shape
+  const mapped: PreviousExam[] = data.map((exam: any) => {
+    let yearLevel: PreviousExam['yearLevel'] = exam.year_level;
+
+    if (typeof exam.year_level === 'string') {
+      if (exam.year_level === '1' || exam.year_level === '2' || exam.year_level === '3') {
+        yearLevel = Number(exam.year_level) as 1 | 2 | 3;
+      } else {
+        yearLevel = exam.year_level;
+      }
+    }
+
+    return {
+      id: exam.id,
+      courseName: exam.course_name,
+      courseNameAr: exam.course_name_ar ?? undefined,
+      major: exam.major,
+      yearLevel,
+      semester: exam.semester,
+      academicYear: exam.academic_year,
+      examType: exam.exam_type,
+      pdfUrl: exam.pdf_url,
+    };
   });
 
-  const [searchQuery, setSearchQuery] = useState('');
+  // If database is empty, preserve the demo data experience
+  return mapped.length > 0 ? mapped : staticPreviousExams;
+}
 
-  // Get unique academic years for filter
-  const availableYears = useMemo(() => {
-    const years = new Set(previousExams.map((exam) => exam.academicYear));
-    return Array.from(years).sort().reverse();
-  }, []);
-
-  // Filter exams based on all criteria
-  const filteredExams = useMemo(() => {
-    return previousExams.filter((exam) => {
-      // Major filter
-      if (filters.major !== 'all' && exam.major !== filters.major) {
-        return false;
-      }
-
-      // Year level filter
-      if (
-        filters.yearLevel !== 'all' &&
-        exam.yearLevel.toString() !== filters.yearLevel
-      ) {
-        return false;
-      }
-
-      // Semester filter
-      if (filters.semester !== 'all' && exam.semester !== filters.semester) {
-        return false;
-      }
-
-      // Academic year filter
-      if (
-        filters.academicYear !== 'all' &&
-        exam.academicYear !== filters.academicYear
-      ) {
-        return false;
-      }
-
-      // Exam type filter
-      if (filters.examType !== 'all' && exam.examType !== filters.examType) {
-        return false;
-      }
-
-      // Search query filter
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        const matchesCourseName = exam.courseName.toLowerCase().includes(query);
-        const matchesCourseNameAr = exam.courseNameAr?.toLowerCase().includes(query);
-        return matchesCourseName || matchesCourseNameAr;
-      }
-
-      return true;
-    });
-  }, [filters, searchQuery]);
+export default async function PreviousExamsPage() {
+  const exams = await getPreviousExams();
 
   return (
     <>
@@ -80,37 +71,7 @@ export default function PreviousExamsPage() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search by course name..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-smooth"
-            />
-          </div>
-        </div>
-
-        {/* Filters */}
-        <ExamFilter
-          filters={filters}
-          onFilterChange={setFilters}
-          availableYears={availableYears}
-        />
-
-        {/* Results Count */}
-        <div className="mb-4">
-          <p className="text-gray-600">
-            Showing <span className="font-semibold text-primary">{filteredExams.length}</span>{' '}
-            {filteredExams.length === 1 ? 'exam' : 'exams'}
-          </p>
-        </div>
-
-        {/* Exam Table */}
-        <ExamTable exams={filteredExams} />
+        <PreviousExamsClient exams={exams} />
       </div>
     </>
   );

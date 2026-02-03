@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 const navItems = [
   {
@@ -62,7 +63,11 @@ export default function AdminNav() {
       router.push('/login');
       router.refresh();
     } catch (error) {
-      console.error('Logout error:', error);
+      logger.error('Logout error', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      // Still redirect even on error
+      router.push('/login');
     } finally {
       setLoading(false);
     }
