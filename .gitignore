@@ -38,3 +38,7 @@ tunnel.js
 
 .vercel
 .env*.local
+
+# Files containing sensitive credentials
+CLAUDE.md
+.mcp.json

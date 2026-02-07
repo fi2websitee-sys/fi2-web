@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["C:/Users/User/Projects/supabase-mcp-server/build/index.js"],
+      "env": {
+        "SUPABASE_URL": "https://YOUR_PROJECT.supabase.co",
+        "SUPABASE_SERVICE_ROLE_KEY": "your_service_role_key_here"
+      }
+    }
+  }
+}

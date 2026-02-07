@@ -1,0 +1,184 @@
+# FI2 Website - Claude Code Configuration (TEMPLATE)
+
+⚠️ **SECURITY NOTE**: This is a template file. Copy it to `CLAUDE.md` and replace all placeholder values with your actual credentials. Never commit `CLAUDE.md` to git - it's in .gitignore.
+
+## Project Overview
+
+Faculty of Information II (FI2) Student Committee website for Lebanese University.
+
+**Technology Stack:**
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Supabase (PostgreSQL + Auth + Storage)
+- Vercel deployment
+
+**Repository**: https://github.com/fi2websitee-sys/fi2-web
+
+---
+
+## Supabase Configuration
+
+### Environment Variables
+
+**⚠️ REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL VALUES**
+
+```env
+# Supabase Public Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+
+# Supabase Keys (Store securely in .env.local - DO NOT COMMIT)
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
+
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
+```
+
+### PostgreSQL Connection Details
+
+```
+Host: db.YOUR_PROJECT.supabase.co
+Database: postgres
+User: postgres.YOUR_PROJECT
+Password: YOUR_DATABASE_PASSWORD
+
+# Connection Pooler (Recommended for serverless)
+Connection String (Pooler):
+postgres://postgres.YOUR_PROJECT:YOUR_PASSWORD@aws-region.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true
+
+# Direct Connection
+Connection String (Direct):
+postgres://postgres.YOUR_PROJECT:YOUR_PASSWORD@aws-region.pooler.supabase.com:5432/postgres?sslmode=require
+```
+
+---
+
+## Vercel Environment Variables Setup
+
+### Steps to Configure
+
+1. Go to: https://vercel.com/YOUR_TEAM/YOUR_PROJECT/settings/environment-variables
+
+2. Add the following variables:
+
+| Variable | Value | Environments |
+|----------|-------|--------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase URL | Production, Preview, Development |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your anon key | Production, Preview, Development |
+| `SUPABASE_SERVICE_ROLE_KEY` | Your service role key | Production only (sensitive!) |
+
+3. Redeploy after adding variables
+
+---
+
+## Supabase MCP Server
+
+The Supabase MCP server provides database operation tools for Claude Code.
+
+### Installation
+
+**Location**: `C:\Users\User\Projects\supabase-mcp-server`
+
+```bash
+cd C:\Users\User\Projects\supabase-mcp-server
+npm install
+npm run build
+```
+
+### Configuration in Claude Code
+
+Create `.mcp.json` in your project root (see `.mcp.json.example`):
+
+```json
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["C:/Users/User/Projects/supabase-mcp-server/build/index.js"],
+      "env": {
+        "SUPABASE_URL": "https://YOUR_PROJECT.supabase.co",
+        "SUPABASE_SERVICE_ROLE_KEY": "your_service_role_key_here"
+      }
+    }
+  }
+}
+```
+
+### Available MCP Tools
+
+- `db_query` - Query tables with filters
+- `db_insert` - Insert new records
+- `db_update` - Update existing records
+- `db_delete` - Delete records
+- `db_list_tables` - List all tables
+
+See full documentation in the actual CLAUDE.md file (not committed to git).
+
+---
+
+## Database Schema
+
+### Tables
+
+- `admin_profiles` - Admin user roles
+- `news_items` - News and announcements
+- `previous_exams` - Exam archive
+- `entrance_exams` - Entrance exam records
+- `contract_sheets` - Program contract sheets
+- `contact_submissions` - Contact form submissions
+
+### Security
+
+All tables protected by Row-Level Security (RLS) policies requiring admin authentication.
+
+---
+
+## Development Workflow
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Run production build locally
+npm run start
+```
+
+---
+
+## Security Best Practices
+
+### DO ✅
+
+- Store credentials in `.env.local` (gitignored)
+- Use environment variables in Vercel
+- Rotate API keys regularly
+- Keep this file (CLAUDE.md) in .gitignore
+
+### DON'T ❌
+
+- Commit credentials to git
+- Share service role keys
+- Use production keys in development
+- Commit `.env.local` or `CLAUDE.md`
+
+---
+
+## Setup Instructions
+
+1. Copy this file: `cp CLAUDE.md.example CLAUDE.md`
+2. Edit `CLAUDE.md` and replace all placeholder values
+3. Copy MCP config: `cp .mcp.json.example .mcp.json`
+4. Edit `.mcp.json` and add your credentials
+5. NEVER commit `CLAUDE.md` or `.mcp.json` (they're gitignored)
+
+---
+
+## License
+
+MIT
