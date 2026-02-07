@@ -6,6 +6,9 @@ import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
 import { Lock, Mail, LogIn, AlertCircle } from 'lucide-react';
 
+// Force dynamic rendering to prevent build-time prerendering
+export const dynamic = 'force-dynamic';
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

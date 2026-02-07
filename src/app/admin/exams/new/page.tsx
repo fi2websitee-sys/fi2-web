@@ -8,6 +8,9 @@ import Link from 'next/link';
 import { examUploadSchema, fileUploadSchema } from '@/lib/validation/schemas';
 import { logger } from '@/lib/utils/logger';
 
+// Force dynamic rendering to prevent build-time prerendering
+export const dynamic = 'force-dynamic';
+
 export default function NewExamPage() {
   const router = useRouter();
   const supabase = createClient();
