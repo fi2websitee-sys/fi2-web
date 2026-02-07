@@ -28,7 +28,7 @@ export default function Accordion({ title, children, defaultOpen = false }: Acco
         />
       </button>
       {isOpen && (
-        <div className="px-6 py-4 bg-white">
+        <div className="px-6 py-4 bg-white accordion-content">
           {children}
         </div>
       )}

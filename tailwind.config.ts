@@ -49,6 +49,9 @@ const config: Config = {
         glow: 'var(--shadow-glow)',
         'red-glow': 'var(--shadow-red-glow)',
       },
+      transitionTimingFunction: {
+        'expo-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
+      },
     },
   },
   plugins: [],

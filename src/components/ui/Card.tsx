@@ -22,7 +22,7 @@ export default function Card({
     <div
       className={cn(
         'bg-white rounded-lg shadow-md p-6 transition-smooth',
-        hover && 'hover-lift hover:shadow-lg',
+        hover && 'hover-lift hover:shadow-lg card-glow',
         accent && 'border-t-4 border-primary',
         className
       )}

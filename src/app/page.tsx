@@ -54,31 +54,31 @@ export default function Home() {
               <div className="space-y-3">
                 <Link
                   href="/entrance-exams"
-                  className="flex items-center p-3 bg-off-white hover:bg-primary/5 rounded-lg transition-smooth group"
+                  className="flex items-center p-3 bg-off-white hover:bg-primary/5 rounded-lg transition-smooth group hover:shadow-sm"
                 >
-                  <FileText className="w-5 h-5 text-primary mr-3 group-hover:scale-110 transition-transform" />
-                  <span className="text-gray-800 font-medium">Entrance Exams</span>
+                  <FileText className="w-5 h-5 text-primary mr-3 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
+                  <span className="text-gray-800 font-medium group-hover:text-primary transition-smooth">Entrance Exams</span>
                 </Link>
                 <Link
                   href="/previous-exams"
-                  className="flex items-center p-3 bg-off-white hover:bg-primary/5 rounded-lg transition-smooth group"
+                  className="flex items-center p-3 bg-off-white hover:bg-primary/5 rounded-lg transition-smooth group hover:shadow-sm"
                 >
-                  <BookOpen className="w-5 h-5 text-primary mr-3 group-hover:scale-110 transition-transform" />
-                  <span className="text-gray-800 font-medium">Previous Exams</span>
+                  <BookOpen className="w-5 h-5 text-primary mr-3 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
+                  <span className="text-gray-800 font-medium group-hover:text-primary transition-smooth">Previous Exams</span>
                 </Link>
                 <Link
                   href="/contract-sheets"
-                  className="flex items-center p-3 bg-off-white hover:bg-primary/5 rounded-lg transition-smooth group"
+                  className="flex items-center p-3 bg-off-white hover:bg-primary/5 rounded-lg transition-smooth group hover:shadow-sm"
                 >
-                  <FileText className="w-5 h-5 text-primary mr-3 group-hover:scale-110 transition-transform" />
-                  <span className="text-gray-800 font-medium">Contract Sheets</span>
+                  <FileText className="w-5 h-5 text-primary mr-3 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
+                  <span className="text-gray-800 font-medium group-hover:text-primary transition-smooth">Contract Sheets</span>
                 </Link>
                 <Link
                   href="/news"
-                  className="flex items-center p-3 bg-off-white hover:bg-primary/5 rounded-lg transition-smooth group"
+                  className="flex items-center p-3 bg-off-white hover:bg-primary/5 rounded-lg transition-smooth group hover:shadow-sm"
                 >
-                  <Calendar className="w-5 h-5 text-primary mr-3 group-hover:scale-110 transition-transform" />
-                  <span className="text-gray-800 font-medium">News & Events</span>
+                  <Calendar className="w-5 h-5 text-primary mr-3 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
+                  <span className="text-gray-800 font-medium group-hover:text-primary transition-smooth">News & Events</span>
                 </Link>
               </div>
             </Card>
@@ -132,7 +132,7 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="text-center bg-primary/5 rounded-2xl p-12 reveal reveal-scale">
+        <section className="text-center cta-atmosphere rounded-2xl p-12 reveal reveal-scale">
           <Users className="w-16 h-16 text-primary mx-auto mb-4" />
           <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-4">
             Join Our Community

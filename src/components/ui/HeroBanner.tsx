@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import AnimatedBackground from './AnimatedBackground';
+import HeroParticles from './HeroParticles';
 
 export interface HeroBannerProps {
   title: string;
@@ -23,7 +24,7 @@ export default function HeroBanner({
   return (
     <div
       className={cn(
-        'relative w-full py-20 px-4 sm:px-6 lg:px-8 overflow-hidden',
+        'relative w-full py-24 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden',
         !backgroundImage && 'hero-atmosphere',
         className
       )}
@@ -47,6 +48,9 @@ export default function HeroBanner({
         <AnimatedBackground variant="green" intensity="medium" />
       )}
 
+      {/* Particle Constellation */}
+      {!backgroundImage && animated && <HeroParticles />}
+
       {/* Gradient Mesh */}
       {!backgroundImage && <div className="absolute inset-0 gradient-mesh" />}
 
@@ -54,9 +58,13 @@ export default function HeroBanner({
       <div className="relative max-w-7xl mx-auto text-center">
         <h1
           className={cn(
-            'text-4xl sm:text-5xl lg:text-6xl font-heading font-bold mb-4 reveal reveal-1',
+            'font-heading font-bold mb-4 reveal reveal-1',
+            backgroundImage
+              ? 'text-4xl sm:text-5xl lg:text-6xl'
+              : 'text-4xl sm:text-5xl lg:text-6xl',
             backgroundImage ? 'text-white' : 'text-primary accent-underline inline-block'
           )}
+          style={!backgroundImage ? { fontSize: 'var(--text-4xl)' } : undefined}
         >
           {title}
         </h1>

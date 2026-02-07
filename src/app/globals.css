@@ -44,11 +44,14 @@
   --error: #EF4444;
   --info: #3B82F6;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(26, 25, 24, 0.04);
-  --shadow-md: 0 4px 12px rgba(26, 25, 24, 0.08);
-  --shadow-lg: 0 12px 32px rgba(26, 25, 24, 0.12);
-  --shadow-xl: 0 24px 48px rgba(26, 25, 24, 0.16);
+  /* Fluid Typography */
+  --text-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.25rem);
+
+  /* Shadows — dual-layer for realistic depth */
+  --shadow-sm: 0 1px 2px rgba(26,25,24,0.04), 0 1px 3px rgba(26,25,24,0.03);
+  --shadow-md: 0 4px 6px rgba(26,25,24,0.04), 0 2px 12px rgba(26,25,24,0.06);
+  --shadow-lg: 0 8px 16px rgba(26,25,24,0.06), 0 4px 32px rgba(26,25,24,0.08);
+  --shadow-xl: 0 16px 32px rgba(26,25,24,0.08), 0 8px 48px rgba(26,25,24,0.1);
   --shadow-glow: 0 0 40px var(--primary-glow);
   --shadow-red-glow: 0 0 20px var(--red-subtle);
 }
@@ -149,24 +152,24 @@
   }
 }
 
-/* Reveal Animations with Stagger */
+/* Reveal Animations with Stagger — expo-out curve */
 .reveal {
-  animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
 
 .reveal-scale {
-  animation: fadeInScale 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
 
 .reveal-left {
-  animation: slideInLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
 
 .reveal-right {
-  animation: slideInRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
 
@@ -190,7 +193,7 @@
   left: 0;
   height: 4px;
   background: var(--red-primary);
-  animation: expandWidth 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: expandWidth 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: 0.5s;
   width: 0;
 }
@@ -313,12 +316,84 @@
   }
 
   .transition-smooth {
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hover-lift:hover {
     transform: translateY(-4px);
   }
+}
+
+/* Glass-morphism */
+.glass {
+  background: rgba(254, 253, 251, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Section atmosphere gradients */
+.section-atmosphere {
+  background: radial-gradient(ellipse at 50% 0%, rgba(13, 92, 70, 0.06) 0%, transparent 70%);
+}
+
+.cta-atmosphere {
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(13, 92, 70, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 50%, rgba(212, 168, 83, 0.06) 0%, transparent 60%),
+    var(--off-white);
+}
+
+/* Card gradient border on hover */
+.card-glow {
+  position: relative;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+/* Image zoom on hover */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom > * {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom:hover > * {
+  transform: scale(1.05);
+}
+
+/* Accordion slide-down animation */
+@keyframes accordionOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.accordion-content {
+  animation: accordionOpen 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Custom Scrollbar */
@@ -353,16 +428,18 @@
 /* Focus Styles for Accessibility - Red accents */
 *:focus-visible {
   outline: 2px solid var(--red-primary);
-  outline-offset: 2px;
+  outline-offset: 3px;
   border-radius: 4px;
+  transition: outline-offset 0.15s ease;
 }
 
 /* Input focus states with red glow */
-input:focus,
-textarea:focus,
-select:focus {
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--red-subtle);
+  outline: none;
 }
 
 /* Red pip pulse animation */

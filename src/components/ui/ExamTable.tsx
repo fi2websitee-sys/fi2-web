@@ -137,7 +137,7 @@ export default function ExamTable({ exams }: ExamTableProps) {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {exams.map((exam) => (
-              <tr key={exam.id} className="hover:bg-gray-50 transition-smooth">
+              <tr key={exam.id} className="hover:bg-primary/[0.03] transition-smooth">
                 <td className="px-6 py-4">
                   <div>
                     <p className="font-medium text-gray-800">{exam.courseName}</p>
@@ -171,7 +171,7 @@ export default function ExamTable({ exams }: ExamTableProps) {
                   <a
                     href={exam.pdfUrl}
                     download
-                    className="inline-flex items-center px-3 py-2 text-sm text-primary hover:text-white hover:bg-primary rounded-lg transition-smooth"
+                    className="inline-flex items-center px-3 py-2 text-sm text-primary hover:text-white hover:bg-primary rounded-lg transition-smooth active:scale-[0.97]"
                   >
                     <Download className="w-4 h-4 mr-1" />
                     Download

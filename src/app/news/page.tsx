@@ -87,7 +87,7 @@ export default function NewsPage() {
               className={`reveal reveal-${Math.min(index + 1, 6)} overflow-hidden p-0`}
             >
               {/* Image Placeholder */}
-              <div className="h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+              <div className="h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center img-zoom">
                 <Calendar className="w-16 h-16 text-primary/40" />
               </div>
 

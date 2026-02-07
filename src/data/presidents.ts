@@ -6,6 +6,7 @@ export const presidents: President[] = [
     name: 'NAWAL GHOSSEIN',
     nameAr: 'نوال غصين',
     period: '2025 - Present',
+    photo: '/images/presidents/nawal-ghossein.jpg',
     isCurrent: true,
     contact: {
       email: 'media.lufi2@gmail.com',
@@ -17,6 +18,7 @@ export const presidents: President[] = [
     name: 'Chloe Abi Nader',
     nameAr: 'كلوي أبي نادر',
     period: '2024 - 2025',
+    photo: '/images/presidents/chloe-abi-nader.jpg',
     isCurrent: false,
   },
   {
@@ -24,6 +26,7 @@ export const presidents: President[] = [
     name: 'Marwan Chidiac',
     nameAr: 'مروان شدياق',
     period: '2023 - 2024',
+    photo: '/images/presidents/marwan-chidiac.jpg',
     isCurrent: false,
   },
   {

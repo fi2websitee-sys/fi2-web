@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Mail, Phone, User } from 'lucide-react';
 import HeroBanner from '@/components/ui/HeroBanner';
 import Card from '@/components/ui/Card';
@@ -53,8 +54,18 @@ export default function AboutPage() {
             <div className="max-w-2xl mx-auto">
               <Card accent hover={false} className="reveal reveal-2">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                  <div className="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <User className="w-16 h-16 text-primary" />
+                  <div className="w-32 h-32 rounded-full flex-shrink-0 overflow-hidden bg-primary/10 flex items-center justify-center">
+                    {currentPresident.photo ? (
+                      <Image
+                        src={currentPresident.photo}
+                        alt={currentPresident.name}
+                        width={128}
+                        height={128}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-16 h-16 text-primary" />
+                    )}
                   </div>
                   <div className="flex-1 text-center sm:text-left">
                     <h3 className="text-2xl font-heading font-bold text-gray-800 mb-2">
@@ -108,8 +119,18 @@ export default function AboutPage() {
                 className={`reveal reveal-${Math.min(index + 2, 6)}`}
               >
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <User className="w-10 h-10 text-gray-400" />
+                  <div className="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden bg-gray-100 flex items-center justify-center">
+                    {president.photo ? (
+                      <Image
+                        src={president.photo}
+                        alt={president.name}
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-10 h-10 text-gray-400" />
+                    )}
                   </div>
                   <h3 className="text-lg font-heading font-bold text-gray-800 mb-1">
                     {president.name}

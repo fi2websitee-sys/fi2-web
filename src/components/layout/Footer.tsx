@@ -53,7 +53,7 @@ export default function Footer() {
                 href="https://www.facebook.com/fi2studentscommittee"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary-light rounded-lg transition-smooth hover-lift"
+                className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary-light rounded-lg transition-smooth hover:scale-105 hover:shadow-glow"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
@@ -62,7 +62,7 @@ export default function Footer() {
                 href="https://www.instagram.com/fi2_students_committee/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary-light rounded-lg transition-smooth hover-lift"
+                className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary-light rounded-lg transition-smooth hover:scale-105 hover:shadow-glow"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
