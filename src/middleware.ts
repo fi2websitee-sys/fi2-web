@@ -93,12 +93,15 @@ export async function middleware(request: NextRequest) {
       return addSecurityHeaders(redirectResponse)
     }
   } catch (error) {
-    // If there's an error (e.g., database connection), allow request through
-    // Page-level checks will handle authentication
     logger.error('Middleware error', {
       error: error instanceof Error ? error.message : 'Unknown error',
       pathname: request.nextUrl.pathname,
     });
+    // Fail secure: deny access to admin routes if auth check throws
+    if (request.nextUrl.pathname.startsWith('/admin')) {
+      const errorResponse = NextResponse.redirect(new URL('/login?error=server', request.url))
+      return addSecurityHeaders(errorResponse)
+    }
   }
 
   // Add security headers to all responses
