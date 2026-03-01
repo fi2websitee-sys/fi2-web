@@ -1,6 +1,17 @@
 /**
  * CSRF Protection Utility
- * Generates and validates CSRF tokens for form submissions
+ * Generates and validates CSRF tokens for form submissions.
+ *
+ * NOTE: This utility is NOT wired up to any current API routes, and that is intentional.
+ * All existing API endpoints (/api/auth/login, /api/contact, etc.) use JSON bodies,
+ * which are inherently protected against CSRF attacks because:
+ *   1. Browsers require a CORS preflight (OPTIONS) for cross-origin JSON POSTs, which
+ *      our server does not permit for untrusted origins.
+ *   2. Supabase auth cookies are set with SameSite protection at the library level.
+ *
+ * If a future endpoint accepts multipart/form-data or application/x-www-form-urlencoded,
+ * wire up requireCSRF() in that route handler and send the token from getCSRFToken()
+ * via the `x-csrf-token` request header.
  */
 
 import { cookies } from 'next/headers';
