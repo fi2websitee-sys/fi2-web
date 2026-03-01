@@ -1,20 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
 import { Lock, Mail, LogIn, AlertCircle } from 'lucide-react';
+
+// Force dynamic rendering to prevent build-time prerendering
+export const dynamic = 'force-dynamic';
 
 const URL_ERROR_MESSAGES: Record<string, string> = {
   unauthorized: 'You do not have permission to access that page.',
   server: 'A server error occurred. Please try again.',
 };
 
-// Force dynamic rendering to prevent build-time prerendering
-export const dynamic = 'force-dynamic';
-
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -160,5 +160,13 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginContent />
+    </Suspense>
   );
 }
