@@ -1,10 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
 import { Lock, Mail, LogIn, AlertCircle } from 'lucide-react';
+
+const URL_ERROR_MESSAGES: Record<string, string> = {
+  unauthorized: 'You do not have permission to access that page.',
+  server: 'A server error occurred. Please try again.',
+};
 
 // Force dynamic rendering to prevent build-time prerendering
 export const dynamic = 'force-dynamic';
@@ -15,7 +20,11 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
+
+  const urlError = searchParams.get('error');
+  const urlErrorMessage = urlError ? URL_ERROR_MESSAGES[urlError] : null;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +79,15 @@ export default function LoginPage() {
         {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
           <form onSubmit={handleLogin} className="space-y-6">
-            {/* Error Message */}
+            {/* URL-based error (e.g. redirected from middleware) */}
+            {urlErrorMessage && !error && (
+              <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-red-800">{urlErrorMessage}</p>
+              </div>
+            )}
+
+            {/* Form submission error */}
             {error && (
               <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
                 <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />

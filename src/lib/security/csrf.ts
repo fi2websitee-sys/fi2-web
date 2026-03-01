@@ -5,9 +5,14 @@
  * NOTE: This utility is NOT wired up to any current API routes, and that is intentional.
  * All existing API endpoints (/api/auth/login, /api/contact, etc.) use JSON bodies,
  * which are inherently protected against CSRF attacks because:
- *   1. Browsers require a CORS preflight (OPTIONS) for cross-origin JSON POSTs, which
- *      our server does not permit for untrusted origins.
- *   2. Supabase auth cookies are set with SameSite protection at the library level.
+ *   1. `Content-Type: application/json` is a non-simple content type. Browsers will not
+ *      send a cross-origin POST with this content type without first sending a CORS
+ *      preflight (OPTIONS). Next.js does not emit permissive CORS headers by default,
+ *      so the preflight is rejected and the cross-origin request is blocked.
+ *   2. Traditional HTML forms cannot set Content-Type to application/json, so a
+ *      form-based CSRF attack cannot reach these endpoints.
+ *   3. Supabase auth cookies default to SameSite=Lax, which additionally blocks
+ *      cross-site POST requests from carrying the session cookie.
  *
  * If a future endpoint accepts multipart/form-data or application/x-www-form-urlencoded,
  * wire up requireCSRF() in that route handler and send the token from getCSRFToken()
